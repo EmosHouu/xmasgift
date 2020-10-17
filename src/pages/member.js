@@ -5,11 +5,15 @@ import Layout from "../components/layout"
 import Image from "../components/image"
 import SEO from "../components/seo"
 
-const IndexPage = () => (
+const MemberPage = () => (
   <Layout>
-    <SEO title="Home" />
-    <Link to="/board/">Create new board</Link>
+    <SEO title="Member"/>
+    board name
+
+    waiting for rest people... / pick for you:
+
+    [send this page to you email]
   </Layout>
 )
 
-export default IndexPage
+export default MemberPage
