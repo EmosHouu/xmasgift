@@ -1,7 +1,10 @@
+import axios from 'axios';
+const url = process.env.NODE_ENV === 'production' ? process.env.GATSBY_API_URL : '';
+
 export async function createBoard() {
-  // const newBoardRef = firebase
-  //     .database()
-  //     .ref('lists2/')
-  //     .push();
+  // return axios.get(url + '/api/createBoard')
+  //   .then(response => {
+  //     return response.data;
+  //   });
   console.log(newBoardRef);
 }
