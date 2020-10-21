@@ -2,7 +2,7 @@ require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 });
 
-const { createProxyMiddleware } = require('http-proxy-middleware');
+var { createProxyMiddleware } = require("http-proxy-middleware");
 
 module.exports = {
   siteMetadata: {
@@ -11,28 +11,17 @@ module.exports = {
     author: `@gatsbyjs`,
   },
   developMiddleware: app => {
-    if (process.env.API_URL) {
-      app.use(
-        '/api',
-        createProxyMiddleware({
-          target: process.env.API_URL || '/',
-          changeOrigin: true,
-          secure: false,
-        })
-      );
-    } else {
-      app.use(
-        '/api',
-        createProxyMiddleware({
-          target: '/',
-          changeOrigin: true,
-          secure: false,
-          router: {
-            'localhost:8000': 'http://localhost:5000'
-          }
-        })
-      );
-    }
+    app.use(
+      '/api/',
+      createProxyMiddleware({
+        target: "http://localhost:5000",
+        changeOrigin: true,
+        secure: false,
+        pathRewrite: {
+          "/api/": "",
+        },
+      })
+    );
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -56,7 +45,7 @@ module.exports = {
         display: `minimal-ui`,
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
-    }
+    },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,

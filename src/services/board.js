@@ -6,5 +6,5 @@ export async function createBoard() {
     .then(response => {
       return response.data;
     });
-  // console.log(newBoardRef);
+  console.log(newBoardRef);
 }
