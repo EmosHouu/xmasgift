@@ -11,17 +11,28 @@ module.exports = {
     author: `@gatsbyjs`,
   },
   developMiddleware: app => {
-    app.use(
-      '/api/',
-      createProxyMiddleware({
-        target: "http://localhost:5000",
-        changeOrigin: true,
-        secure: false,
-        pathRewrite: {
-          "/api/": "",
-        },
-      })
-    );
+    if (process.env.API_URL) {
+      app.use(
+        '/api/',
+        createProxyMiddleware({
+          target: process.env.API_URL || '/',
+          changeOrigin: true,
+          secure: false,
+        })
+      );
+    } else {
+      app.use(
+        '/api/',
+        createProxyMiddleware({
+          target: 'http://localhost:5000',
+          changeOrigin: true,
+          secure: false,
+          pathRewrite: {
+            '/api/api' : '/api'
+          }
+        })
+      );
+    }
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
