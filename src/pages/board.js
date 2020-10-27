@@ -33,7 +33,7 @@ const BoardPage = ({ location }) => {
 
   const lidMatch = location.search.match(/lid=([^&]*)/);
 
-  if(!lidMatch) return <Error />
+  if(!lidMatch) return <div>A</div>
   const lid = lidMatch[1];
 
   const onRemoveUser = (userId) => {
@@ -61,9 +61,8 @@ const BoardPage = ({ location }) => {
     <Layout>
       <SEO title="Board" />
       <h1>{boardName}</h1>
-      Send this link to everybody
-      <Link to={"/new-member" + location.search}>{origin + '/new-member'+ location.search}</Link> [Clipboard]
-      <br/>
+      {!isDraw && <div>Send this link to everybody
+      <Link to={"/new-member" + location.search}>{origin + '/new-member'+ location.search}</Link> [Clipboard]</div>  }
       {userList.map((user, index) => (
         <div key={user.userId}>
         {user.name}
