@@ -3,7 +3,7 @@ import { navigate } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import Error from  "../components/error"
+import Error from  "../components/Error"
 import { getBoardDetails, addUser } from '../services/board';
 
 const NewMemberPage = ({ location }) => {

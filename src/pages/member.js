@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import Error from  "../components/error"
+import Error from  "../components/Error"
 import { getBoardDetails, getUser } from '../services/board'
 
 const MemberPage = ({location}) => {
