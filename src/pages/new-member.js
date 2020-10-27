@@ -13,22 +13,26 @@ const NewMemberPage = ({ location }) => {
   const [name, setName] = useState('');
   const [isDraw, setIsDraw] = useState('');
   const [error, setError] = useState(false);
-  const lidMatch = location.search.match(/lid=([^&]*)/);
+  const [lid, setLid] = useState();
 
   //TODO: getBoardDetails with isDraw functionality
   useEffect(() => {
-    getBoardDetails(lid)
-    .then((details) => {
-      setBoardName(details.name);
-      setIsDraw(details.isDraw);
-    })
-    .catch(() => {
-      setError(true);
-    })
-    .finally(()=> {
-      setIsPageLoading(false);
-    });
-  }, []);
+    const lidMatch = location.search.match(/lid=([^&]*)/);
+    if(lidMatch) {
+      setLid(lidMatch[1])
+      getBoardDetails(lidMatch[1])
+      .then((details) => {
+        setBoardName(details.name);
+        setIsDraw(details.isDraw);
+      })
+      .catch(() => {
+        setError(true);
+      })
+      .finally(()=> {
+        setIsPageLoading(false);
+      });
+    }
+  }, [location]);
 
   const onAddUser = () => {
     setIsLoading(true);
@@ -38,11 +42,10 @@ const NewMemberPage = ({ location }) => {
     .finally(() => setIsLoading(false))
   }
 
-  if(isLoading) return <div>is loading...</div>;
-  if(!lidMatch || error) return <Error />;
-  if(isDraw) return <div>You cannot join. Already draw.</div>
-  const lid = lidMatch[1];
   if(isPageLoading) return null;
+  if(isDraw) return <div>You cannot join. Already draw.</div>
+  if(!lid || error) return <Error />;
+  if(isLoading) return <div>is loading...</div>;
 
   return (<Layout>
     <SEO title="New Member" />

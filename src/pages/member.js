@@ -11,34 +11,38 @@ const MemberPage = ({location}) => {
   const [isPageLoading, setIsPageLoading] = useState(true);
   const [isDraw, setIsDraw] = useState(true);
   const [error, setError] = useState(false);
-  const lidMatch = location.search.match(/lid=([^&]*)/);
-  const uidMatch = location.search.match(/uid=([^&]*)/);
+  const [lid, setLid] = useState();
+  const [uid, setUid] = useState();
 
   useEffect(() => {
-    getBoardDetails(lid)
-    .then((details) => {
-      setBoardName(details.name);
-      setIsDraw(details.isDraw);
-    })
-    .then(() => getUser(lid,uid))
-    .then((user) => {
-      if(user.draw) {
-        setDrawName(user.draw);
-      }
-    })
-    .catch(() => {
-      setError(true);
-    })
-    .finally(()=> {
-      setIsPageLoading(false);
-    })
-  }, []);
+    const lidMatch = location.search.match(/lid=([^&]*)/);
+    const uidMatch = location.search.match(/uid=([^&]*)/);
+    if(uidMatch && lidMatch) {
+      setLid(lidMatch[0]);
+      setUid(uidMatch[0]);
+      getBoardDetails(lidMatch[0])
+      .then((details) => {
+        setBoardName(details.name);
+        setIsDraw(details.isDraw);
+      })
+      .then(() => getUser(lidMatch[0],uidMatch[0]))
+      .then((user) => {
+        if(user.draw) {
+          setDrawName(user.draw);
+        }
+      })
+      .catch(() => {
+        setError(true);
+      })
+      .finally(()=> {
+        setIsPageLoading(false);
+      })
+    }
 
-  if(!lidMatch || !uidMatch || error) return <Error />
-  const lid = lidMatch[1];
-  const uid = uidMatch[1];
+  }, [location]);
 
   if(isPageLoading) return null;
+  if(!lid || !uid || error) return <Error />
   if(isDraw && !drawName) return <div>You miss it. Already draw.</div>
 
   return (

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 import { Link } from "gatsby"
-import { navigate } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Error from '../components/Error'
@@ -11,30 +10,29 @@ const BoardPage = ({ location }) => {
   const [userList, setUserList] = useState([]);
   const [isDraw, setIsDraw] = useState(false);
   const [error, setError] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isPageLoading, setIsPageLoading] = useState(true);
+  const [lid, setLid] = useState();
 
   useEffect(()  =>  {
-    //eslint-disable-next-line react-hooks/exhaustive-deps
-    getList(lid)
-    .then((data) => {
-      setBoardName(data.boardName);
-      setUserList(data.users);
-      if(data.isDraw) {
-        setIsDraw(data.isDraw);
-      }
-    })
-    .catch(() => {
-      setError(true);
-    }).
-    finally(() => {
-      setIsLoading(false);
-    })
-  }, []);
-
-  const lidMatch = location.search.match(/lid=([^&]*)/);
-
-  if(!lidMatch) return <div>A</div>
-  const lid = lidMatch[1];
+    const lidMatch = location.search.match(/lid=([^&]*)/);
+    if(lidMatch) {
+      setLid(lidMatch[1])
+      getList(lidMatch[1])
+      .then((data) => {
+        setBoardName(data.boardName);
+        setUserList(data.users);
+        if(data.isDraw) {
+          setIsDraw(data.isDraw);
+        }
+      })
+      .catch(() => {
+        setError(true);
+      })
+      .finally(() => {
+        setIsPageLoading(false);
+      })
+    }
+  }, [location]);
 
   const onRemoveUser = (userId) => {
     removeUser(lid, userId)
@@ -54,8 +52,8 @@ const BoardPage = ({ location }) => {
     .then(() => setIsDraw(false));
   }
 
-  if(isLoading) return null;
-  if(error) return <Error />
+  if(isPageLoading) return null;
+  if(!lid || error) return <Error />
 
   return (
     <Layout>
@@ -70,10 +68,8 @@ const BoardPage = ({ location }) => {
         {user.draw}
         </div>
       ))}
-      {userList.length > 1 &&
-      !isDraw && <button onClick={onDraw}>draw</button> ||
-      isDraw && <button onClick={onUnDraw}>undraw</button>
-      }
+      {userList.length > 1 && !isDraw && <button onClick={onDraw}>draw</button>  }
+      {userList.length > 1 && isDraw && <button onClick={onUnDraw}>undraw</button> }
       <br/>
       Bookmark this page to have access to board
     </Layout>
