@@ -18,14 +18,15 @@ const MemberPage = ({location}) => {
     const lidMatch = location.search.match(/lid=([^&]*)/);
     const uidMatch = location.search.match(/uid=([^&]*)/);
     if(uidMatch && lidMatch) {
-      setLid(lidMatch[0]);
-      setUid(uidMatch[0]);
-      getBoardDetails(lidMatch[0])
+      setLid(lidMatch[1]);
+      setUid(uidMatch[1]);
+      console.log(lidMatch[1])
+      getBoardDetails(lidMatch[1])
       .then((details) => {
         setBoardName(details.name);
         setIsDraw(details.isDraw);
       })
-      .then(() => getUser(lidMatch[0],uidMatch[0]))
+      .then(() => getUser(lidMatch[1],uidMatch[1]))
       .then((user) => {
         if(user.draw) {
           setDrawName(user.draw);
