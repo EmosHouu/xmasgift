@@ -54,7 +54,7 @@ const NewMemberPage = ({ location }) => {
     <h1>{boardName}</h1>
     <form onSubmit={(e) => {e.preventDefault(); name !== '' && onAddUser()}}>
       <input placeholder="your name" value={name} onChange={(e) => setName(e.target.value) } />
-      <button disabled={name === ''} type="submit">Add yourself</button>
+      {name && <button disabled={name === ''} type="submit">Add yourself</button>}
     </form>
   </Layout>
 )}

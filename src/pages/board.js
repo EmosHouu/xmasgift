@@ -56,22 +56,21 @@ const BoardPage = ({ location }) => {
   if(!lid || error) return <Error />
 
   return (
-    <Layout>
+    <Layout
+    footer={<div>Bookmark this page to have access to board</div>}>
       <SEO title="Board" />
       <h1>{boardName}</h1>
       {!isDraw && <div>Send this link to everybody
       <Link to={"/new-member" + location.search}>{origin + '/new-member'+ location.search}</Link> [Clipboard]</div>  }
       {userList.map((user, index) => (
-        <div key={user.userId}>
+        <div key={user.userId + user.name}>
         {user.name}
-        {!isDraw && <button onClick={() => onRemoveUser(user.userId)}>remove</button>}
+        {!isDraw && <button className="remove-button" onClick={() => onRemoveUser(user.userId)}>remove</button>}
         {user.draw}
         </div>
       ))}
       {userList.length > 1 && !isDraw && <button onClick={onDraw}>draw</button>  }
       {userList.length > 1 && isDraw && <button onClick={onUnDraw}>undraw</button> }
-      <br/>
-      Bookmark this page to have access to board
     </Layout>
   );
 }

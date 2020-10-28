@@ -20,8 +20,8 @@ const IndexPage = () => {
   return ( <Layout>
     <SEO title="Home" />
     <form onSubmit={(e) => {e.preventDefault(); name !== '' && onCreateBoard()}}>
-      <input placeholder="Name your gift's hat" value={name} onChange={(e) => setName(e.target.value)} />
-      {name && <button disabled={name === ''} type="submit">Create your hat</button> }
+      <input placeholder="Your christmas roulette" value={name} onChange={(e) => setName(e.target.value)} />
+      {name && <button disabled={name === ''} type="submit">Create</button> }
     </form>
   </Layout>);
 }
