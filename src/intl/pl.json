@@ -1,0 +1,35 @@
+{
+  "home": "Start",
+  "board": "Zarządzanie",
+  "member": "Członek",
+  "new_member": "Nowy Członek",
+
+  "christmas_draw": "Świąteczne losowanie",
+  "title": "Nazwa",
+  "continue": "Kontynuuj",
+  "how_it_works": "Jak to działa?",
+  "rule1": "Stwórz listę i wyślij adres do każdego",
+  "rule2": "Każdy wylosuje osobę której kupi jakiś prezent.",
+  "rule3": "Reszte zasad sami ustalacie, np. ile wydajecie na prezent itd...",
+
+  "b_bookmark": "Zapisz stronę do ulubionych, by zachować dostęp.",
+  "b_send_santa": "Wyślij adres mikołajkowy do każdej grzecznej osoby. Sam również zapisz się na listę (o ile byłeś grzeczny w tym roku)",
+  "b_copied": "Skopiowane do schowka",
+  "b_copy": "Kliknij by skopiować do schowka",
+  "b_none": "Jeszcze nikt się nie zapisał.",
+  "b_draw": "Losuj",
+  "b_undraw": "Unieważnij losowanie",
+
+  "m_bookmark": "Zapisz stronę do ulubionych, by zachować dostęp.",
+  "m_santa_for": "jesteś mikołajem dla",
+  "m_waiting_for": "Poczekaj na resztę osób...",
+
+  "nm_your_name": "Twoje imię.",
+  "nm_dear_santa": "Drogi mikołaju, na święta chciałbym dostać...",
+  "nm_send_letter": "Wyślij list",
+
+  "c_you_missed": "Przegapiłeś. Losowanie zakończone",
+  "c_wrong_address": "Zły adres.",
+  "c_privacy_text": "Wszystkie dane zostaną użyte jedynie w celu tej gry i zostaną całkowicie usunięte z serwera po 3 miesiącach. Używaj tej aplikacji tylko w celach rozrywkowych i nie zamieszczaj tu żadnych wrażliwych danych.",
+  "c_privacy": "Polityka prywatności"
+}

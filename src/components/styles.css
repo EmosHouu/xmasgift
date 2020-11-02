@@ -67,6 +67,11 @@ button.remove-button:hover {
   opacity: 1;
 }
 
+header {
+  padding: 0 20px;
+  justify-self: right;
+}
+
 footer {
   width: 100%;
   background: #ff6f6fff;
@@ -116,11 +121,10 @@ footer {
 
 .copy-link:hover + .copy-info {
   opacity: 1;
-  background: rgba(255,255,255, 0.5);
+  background: rgba(255,255,255, 0.2);
 }
 .copy-info {
   position: absolute;
-  bottom: 0;
   right: 0;
   opacity: 0.2;
   padding: 5px;

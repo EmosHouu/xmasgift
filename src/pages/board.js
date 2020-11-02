@@ -5,12 +5,15 @@ import Error from '../components/Error'
 import Loading from  "../components/Loading"
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useIntl } from "gatsby-plugin-intl"
+import browserLang from 'browser-lang';
 import {
   faUserTimes,
 } from '@fortawesome/free-solid-svg-icons'
 import { getList, removeUser, draw, undraw } from '../services/board';
 
 const BoardPage = ({ location }) => {
+  const intl = useIntl();
   const [boardName, setBoardName] = useState('');
   const [userList, setUserList] = useState([]);
   const [isDraw, setIsDraw] = useState(false);
@@ -70,20 +73,20 @@ const BoardPage = ({ location }) => {
 
   return (
     <Layout
-    footer={<div>Bookmark this page to have access to board</div>}>
-      <SEO title="Board" />
+    footer={<div>{intl.formatMessage({ id: "b_bookmark" })}</div>}>
+      <SEO title={intl.formatMessage({ id: "board" })} />
       <h1 className="break-word">{boardName}</h1>
       {!isDraw &&
         <div className="copyWrapper">
-          <div>Send Santa address to every kind people, including you (if you was kind this year)</div>
-          <CopyToClipboard text={origin + '/new-member'+ location.search}><button onClick={onCopy} className="copy-link">{origin + '/new-member'+ location.search}</button></CopyToClipboard>
+          <div>{intl.formatMessage({ id: "b_send_santa" })}</div>
+          <CopyToClipboard text={origin +'/' + intl.locale + '/new-member'+ location.search}><button onClick={onCopy} className="copy-link">{origin +'/'+ intl.locale + '/new-member'+ location.search}</button></CopyToClipboard>
           <div className="copy-info">
-            {isCopied && <span>Copied to clipboard</span>}
-            {!isCopied && <span>Click to copy</span>}
+            {isCopied && <span>{intl.formatMessage({ id: "b_copied" })}</span>}
+            {!isCopied && <span>{intl.formatMessage({ id: "b_copy" })}</span>}
           </div>
         </div>  }
         <hr />
-        { userList.length === 0 && <div> Nobody is signed yet.</div>}
+        { userList.length === 0 && <div>{intl.formatMessage({ id: "b_none" })}</div>}
       {userList.map((user, index) => (
         <div key={user.userId + user.name}>
         {!isDraw && <button className="remove-button" onClick={() => onRemoveUser(user.userId)}><FontAwesomeIcon icon={faUserTimes} size="1x"/></button>}
@@ -91,8 +94,8 @@ const BoardPage = ({ location }) => {
         {user.draw}
         </div>
       ))}
-      {userList.length > 1 && !isDraw && <button onClick={onDraw}>draw</button>  }
-      {userList.length > 1 && isDraw && <button onClick={onUnDraw}>undraw</button> }
+      {userList.length > 1 && !isDraw && <button onClick={onDraw}>{intl.formatMessage({ id: "b_draw" })}</button>  }
+      {userList.length > 1 && isDraw && <button onClick={onUnDraw}>{intl.formatMessage({ id: "b_undraw" })}</button> }
     </Layout>
   );
 }

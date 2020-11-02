@@ -5,9 +5,11 @@ import SEO from "../components/seo"
 import Error from  "../components/Error"
 import MissingDraw from  "../components/MissingDraw"
 import Loading from  "../components/Loading"
+import { useIntl } from "gatsby-plugin-intl"
 import { getBoardDetails, getUser } from '../services/board'
 
 const MemberPage = ({location}) => {
+  const intl = useIntl();
   const [boardName, setBoardName] = useState('');
   const [drawName, setDrawName] = useState(false);
   const [description, setDescription] = useState(false);
@@ -51,11 +53,11 @@ const MemberPage = ({location}) => {
 
   return (
   <Layout
-  footer={<div>Bookmark this page to have access to this page.</div>}>
-    <SEO title="Member"/>
+  footer={<div>{intl.formatMessage({ id: "m_bookmark" })}</div>}>
+    <SEO title={intl.formatMessage({ id: "member" })}/>
     <h1>{boardName}</h1>
-    <h2>You are santa for</h2>
-    {!drawName && <div>Wait for rest kind people...</div>}
+    <h2>{intl.formatMessage({ id: "m_santa_for" })}</h2>
+    {!drawName && <div>{intl.formatMessage({ id: "m_waiting_for" })}</div>}
     {drawName && <h1>{drawName} </h1>}
     {description &&
       <h2>

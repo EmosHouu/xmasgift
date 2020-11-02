@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react"
-import { navigate } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Error from  "../components/Error"
 import MissingDraw from  "../components/MissingDraw"
 import Loading from  "../components/Loading"
+import { useIntl, navigate } from "gatsby-plugin-intl"
 import { getBoardDetails, addUser } from '../services/board';
 
 const NewMemberPage = ({ location }) => {
+  const intl = useIntl();
   const [isLoading, setIsLoading] = useState(false);
   const [isPageLoading, setIsPageLoading] = useState(true);
   const [boardName, setBoardName] = useState('');
@@ -61,17 +62,17 @@ const NewMemberPage = ({ location }) => {
   if(!lid || error) return <Error />;
 
   return (<Layout>
-    <SEO title="New Member" />
+    <SEO title={intl.formatMessage({ id: "new_member" })} />
     <h1>{boardName}</h1>
     <form onSubmit={(e) => {e.preventDefault(); name !== '' && onAddUser()}}>
-      <input placeholder="Your name." value={name} onChange={(e) => setName(e.target.value) } />
+      <input placeholder={intl.formatMessage({ id: "nm_your_name" })} value={name} onChange={(e) => setName(e.target.value) } />
       <textarea
         type="text"
         rows={textAreaLines}
-        placeholder="Dear Santa, I want to have..."
+        placeholder={intl.formatMessage({ id: "nm_dear_santa" })}
         value={description}
         onChange={(e) => onSetDescription(e.target.value) } />
-      {name && <button disabled={name === ''} type="submit">Send letter</button>}
+      {name && <button disabled={name === ''} type="submit">{intl.formatMessage({ id: "nm_send_letter" })}</button>}
     </form>
   </Layout>
 )}

@@ -7,34 +7,43 @@
 
 import React, { useState } from "react"
 import PropTypes from "prop-types"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faSleight,
-} from '@fortawesome/free-solid-svg-icons'
 import "./layout.css"
 import "./styles.css"
+import { useIntl, changeLocale } from "gatsby-plugin-intl"
 
 const Layout = ({ children, footer }) => {
-  const [privatePolicy , setPrivatePolicy] = useState(false);
+  const intl = useIntl();
+  const [privacePolicy , setPrivacePolicy] = useState(false);
 
   const onPolicy = () => {
-    setPrivatePolicy(!privatePolicy);
+    setPrivacePolicy(!privacePolicy);
   }
+
+  const onChangeLocale = () => {
+    if(intl.locale === 'en') {
+      changeLocale('pl');
+    } else if(intl.locale === 'pl') {
+      changeLocale('en');
+    }
+  }
+
+  const localeChange = intl.locale === 'en' ? 'pl' : 'en'
+
   return (
     <>
       <div className="contener">
+        <header><button onClick={onChangeLocale}>{localeChange}</button></header>
         <main className="main">{children}</main>
         <footer>
         {footer}
         <div className="footer-mine">
-          Copyrights <a href={"https://www.linkedin.com/in/piotr-borysowski-845130100/"} >Arkitekto</a> <FontAwesomeIcon icon={faSleight} size="1x"/>
-          { privatePolicy &&
+          Copyrights <a href={"https://www.linkedin.com/in/piotr-borysowski-845130100/"} >Arkitekto</a>
+          { privacePolicy &&
             <div>
-              Every data you enter would be used only for this game and will be deleted after 3 months.
-              Use it only for have fun and DON'T provide here any sensitive data.
+              {intl.formatMessage({ id: "c_privacy_text" })}
             </div>
           }
-          <button onClick={onPolicy}>Private Policy</button>
+          <button onClick={onPolicy}>{intl.formatMessage({ id: "c_privacy" })}</button>
           <div>btc: <b>12UUffmBhcF1C8YcxK2X5eGJEwFhzEn72R</b></div>
         </div>
         </footer>
