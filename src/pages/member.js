@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Error from  "../components/Error"
+import MissingDraw from  "../components/MissingDraw"
+import Loading from  "../components/Loading"
 import { getBoardDetails, getUser } from '../services/board'
 
 const MemberPage = ({location}) => {
@@ -43,9 +45,9 @@ const MemberPage = ({location}) => {
 
   }, [location]);
 
-  if(isPageLoading) return null;
+  if(isPageLoading) return <Loading />
   if(!lid || !uid || error) return <Error />
-  if(isDraw && !drawName) return <div>You miss it. Already draw.</div>
+  if(isDraw && !drawName) return <MissingDraw />
 
   return (
   <Layout

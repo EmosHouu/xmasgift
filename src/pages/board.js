@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Error from '../components/Error'
+import Loading from  "../components/Loading"
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -64,7 +65,7 @@ const BoardPage = ({ location }) => {
     }, 2000)
   }
 
-  if(isPageLoading) return null;
+  if(isPageLoading) return <Loading />
   if(!lid || error) return <Error />
 
   return (

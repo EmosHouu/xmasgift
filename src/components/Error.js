@@ -1,6 +1,6 @@
 import React from "react";
 
 const Error = () => (
-  <div>Wrong address...</div>
+  <h1 className="error">Wrong address.</h1>
 );
 export default Error;

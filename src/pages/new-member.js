@@ -4,6 +4,8 @@ import { navigate } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Error from  "../components/Error"
+import MissingDraw from  "../components/MissingDraw"
+import Loading from  "../components/Loading"
 import { getBoardDetails, addUser } from '../services/board';
 
 const NewMemberPage = ({ location }) => {
@@ -54,10 +56,9 @@ const NewMemberPage = ({ location }) => {
     setDescription(value);
   }
 
-  if(isPageLoading) return null;
-  if(isDraw) return <div>You cannot join. Already draw.</div>
+  if(isPageLoading || isLoading) return <Loading />
+  if(isDraw) return <MissingDraw />
   if(!lid || error) return <Error />;
-  if(isLoading) return <div>is loading...</div>;
 
   return (<Layout>
     <SEO title="New Member" />

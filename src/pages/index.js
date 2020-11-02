@@ -2,6 +2,7 @@ import React, { useState }  from "react"
 import { navigate } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import Loading from  "../components/Loading"
 import { createBoard } from '../services/board';
 
 const IndexPage = () => {
@@ -20,7 +21,7 @@ const IndexPage = () => {
     setIsInstruction(!isInstruction);
   }
 
-  if(isLoading) return <div>is loading...</div>;
+  if(isLoading) return <Loading />
 
   return ( <Layout>
     <SEO title="Home" />
