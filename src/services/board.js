@@ -22,8 +22,8 @@ export async function getBoardDetails(id) {
     });
 }
 
-export async function addUser(id, name) {
-  return axios.put(url + '/api/addUser?lid=' + id, {name})
+export async function addUser(id, name, description) {
+  return axios.put(url + '/api/addUser?lid=' + id, {name, description})
     .then(response => {
       return response.data;
     });

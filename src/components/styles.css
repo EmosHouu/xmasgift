@@ -51,6 +51,7 @@ button {
   border: none;
   outline: none;
   transition: color 0.2s linear;
+  height: 50px;
 }
 button:hover {
   color: #ffcfcf;
@@ -64,11 +65,6 @@ button.remove-button {
 
 button.remove-button:hover {
   opacity: 1;
-}
-
-.pick {
-  font-size: 50px;
-  margin: 20px 0;
 }
 
 footer {

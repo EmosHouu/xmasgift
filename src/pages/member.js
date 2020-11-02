@@ -8,6 +8,7 @@ import { getBoardDetails, getUser } from '../services/board'
 const MemberPage = ({location}) => {
   const [boardName, setBoardName] = useState('');
   const [drawName, setDrawName] = useState(false);
+  const [description, setDescription] = useState(false);
   const [isPageLoading, setIsPageLoading] = useState(true);
   const [isDraw, setIsDraw] = useState(true);
   const [error, setError] = useState(false);
@@ -20,7 +21,6 @@ const MemberPage = ({location}) => {
     if(uidMatch && lidMatch) {
       setLid(lidMatch[1]);
       setUid(uidMatch[1]);
-      console.log(lidMatch[1])
       getBoardDetails(lidMatch[1])
       .then((details) => {
         setBoardName(details.name);
@@ -30,6 +30,7 @@ const MemberPage = ({location}) => {
       .then((user) => {
         if(user.draw) {
           setDrawName(user.draw);
+          setDescription(user.drawDescription);
         }
       })
       .catch(() => {
@@ -52,8 +53,13 @@ const MemberPage = ({location}) => {
     <SEO title="Member"/>
     <h1>{boardName}</h1>
     <h2>You are santa for</h2>
-    {!drawName && <div>(get back after draw)</div>}
-    {drawName && <div className="pick">{drawName}</div>}
+    {!drawName && <div>Wait for rest kind people...</div>}
+    {drawName && <h1>{drawName} </h1>}
+    {description &&
+      <h2>
+        {description}
+      </h2>
+    }
   </Layout>);
 }
 

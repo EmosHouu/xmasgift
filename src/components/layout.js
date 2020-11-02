@@ -35,7 +35,7 @@ const Layout = ({ children, footer }) => {
               Use it only for have fun and DON'T provide here any sensitive data.
             </div>
           }
-          <button onClick={onPolicy}>Private Policy</button> <br />
+          <button onClick={onPolicy}>Private Policy</button>
           <div>btc: <b>12UUffmBhcF1C8YcxK2X5eGJEwFhzEn72R</b></div>
         </div>
         </footer>

@@ -38,7 +38,7 @@ const NewMemberPage = ({ location }) => {
 
   const onAddUser = () => {
     setIsLoading(true);
-    addUser(lid, name)
+    addUser(lid, name, description)
     .then((uid) => navigate('/member?lid='+lid+'&uid='+uid))
     .catch(() => {
       setIsDraw(true);
