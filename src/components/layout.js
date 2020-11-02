@@ -8,7 +8,10 @@
 import React, { useState } from "react"
 import PropTypes from "prop-types"
 import { Link } from "gatsby"
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faSleight,
+} from '@fortawesome/free-solid-svg-icons'
 import "./layout.css"
 import "./styles.css"
 
@@ -25,7 +28,7 @@ const Layout = ({ children, footer }) => {
         <footer>
         {footer}
         <div className="footer-mine">
-          Copyrights <a href={"https://www.linkedin.com/in/piotr-borysowski-845130100/"} >Arkitekto</a> 🎅
+          Copyrights <a href={"https://www.linkedin.com/in/piotr-borysowski-845130100/"} >Arkitekto</a> <FontAwesomeIcon icon={faSleight} size="1x"/>
           { privatePolicy &&
             <div>
               Every data you enter would be used only for this game and will be deleted after 3 months.

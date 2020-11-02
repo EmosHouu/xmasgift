@@ -1,5 +1,5 @@
 body {
-  background: #ff000094;
+  background: #ff6f6fff;
   color: white;
 
 }
@@ -72,11 +72,11 @@ button.remove-button:hover {
 }
 
 footer {
-  position: absolute;
-  bottom: 15px;
-  left: 0;
-  right: 0;
+  width: 100%;
+  background: #ff6f6fff;
+  padding-bottom: 15px;
   text-align: center;
+  align-self: end;
 }
 
 .footer-mine {
@@ -120,7 +120,7 @@ footer {
 
 .copy-link:hover + .copy-info {
   opacity: 1;
-  background: rgba(255,255,255, 0.3);
+  background: rgba(255,255,255, 0.5);
 }
 .copy-info {
   position: absolute;
