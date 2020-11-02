@@ -11,7 +11,10 @@ body {
 }
 
 .main {
-  width: 500px;
+  height: 500px;
+  max-width: 500px;
+  min-width: 100px;
+  padding: 20px;
 }
 
 input {
@@ -20,12 +23,25 @@ input {
   border-bottom: 1px solid #ff9595a3;
   outline: none;
   color: white;
-  font-size: 50px;
+  font-size: 35px;
   width: 100%;
   transition: border-bottom 0.2s linear;
 }
 
-input:focus { border-bottom: 1px solid white; }
+textarea {
+  margin-top: 10px;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid #ff9595a3;
+  outline: none;
+  color: white;
+  font-size: 15px;
+  width: 100%;
+  transition: border-bottom 0.2s linear;
+  resize: none;
+}
+
+input:focus, textarea:focus { border-bottom: 1px solid white; }
 
 button {
   display: block;
@@ -43,6 +59,11 @@ button:hover {
 button.remove-button {
   display: inline;
   width: auto;
+  opacity: 0.1;
+}
+
+button.remove-button:hover {
+  opacity: 1;
 }
 
 .pick {
@@ -52,8 +73,59 @@ button.remove-button {
 
 footer {
   position: absolute;
-  bottom: 25px;
+  bottom: 15px;
   left: 0;
   right: 0;
   text-align: center;
+}
+
+.footer-mine {
+  margin-top: 20px;
+  color: bisque;
+  font-size: 15px;
+  text-align: center;
+}
+
+.footer-mine a {
+  color: bisque;
+}
+
+.instruction-view {
+  max-height: 500px;
+  display: block;
+  overflow: hidden;
+  transition: max-height 0.2s linear;
+}
+
+.instruction-show {
+  max-height: 0;
+}
+
+.create-btn-hide {
+  visibility: hidden;
+}
+
+.copy-link {
+  text-align: left;
+  padding: 0;
+}
+
+.break-word {
+  word-break: break-all;
+}
+
+.copyWrapper {
+  position: relative;
+}
+
+.copy-link:hover + .copy-info {
+  opacity: 1;
+  background: rgba(255,255,255, 0.3);
+}
+.copy-info {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  opacity: 0.2;
+  padding: 5px;
 }

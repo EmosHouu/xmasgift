@@ -48,11 +48,12 @@ const MemberPage = ({location}) => {
 
   return (
   <Layout
-  footer={<div>Bookmark this page to have access to board</div>}>
+  footer={<div>Bookmark this page to have access to this page.</div>}>
     <SEO title="Member"/>
     <h1>{boardName}</h1>
-    {!drawName && <div>waiting for rest people...</div>}
-    {drawName && <div >you match <div className="pick">{drawName}</div></div>}
+    <h2>You are santa for</h2>
+    {!drawName && <div>(get back after draw)</div>}
+    {drawName && <div className="pick">{drawName}</div>}
   </Layout>);
 }
 

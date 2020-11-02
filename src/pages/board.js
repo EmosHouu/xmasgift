@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react"
-import { Link } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Error from '../components/Error'
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faUserTimes,
+} from '@fortawesome/free-solid-svg-icons'
 import { getList, removeUser, draw, undraw } from '../services/board';
 
 const BoardPage = ({ location }) => {
@@ -12,6 +16,7 @@ const BoardPage = ({ location }) => {
   const [error, setError] = useState(false);
   const [isPageLoading, setIsPageLoading] = useState(true);
   const [lid, setLid] = useState();
+  const [isCopied, setIsCopied] = useState(false);
 
   useEffect(()  =>  {
     const lidMatch = location.search.match(/lid=([^&]*)/);
@@ -52,6 +57,13 @@ const BoardPage = ({ location }) => {
     .then(() => setIsDraw(false));
   }
 
+  const onCopy = () => {
+    setIsCopied(true);
+    setInterval(() => {
+      setIsCopied(false);
+    }, 2000)
+  }
+
   if(isPageLoading) return null;
   if(!lid || error) return <Error />
 
@@ -59,13 +71,22 @@ const BoardPage = ({ location }) => {
     <Layout
     footer={<div>Bookmark this page to have access to board</div>}>
       <SEO title="Board" />
-      <h1>{boardName}</h1>
-      {!isDraw && <div>Send this link to everybody
-      <Link to={"/new-member" + location.search}>{origin + '/new-member'+ location.search}</Link> [Clipboard]</div>  }
+      <h1 className="break-word">{boardName}</h1>
+      {!isDraw &&
+        <div className="copyWrapper">
+          <div>Send Santa address to every kind people, including you (if you was kind this year)</div>
+          <CopyToClipboard text={origin + '/new-member'+ location.search}><button onClick={onCopy} className="copy-link">{origin + '/new-member'+ location.search}</button></CopyToClipboard>
+          <div className="copy-info">
+            {isCopied && <span>Copied to clipboard</span>}
+            {!isCopied && <span>Click to copy</span>}
+          </div>
+        </div>  }
+        <hr />
+        { userList.length === 0 && <div> Nobody is signed yet.</div>}
       {userList.map((user, index) => (
         <div key={user.userId + user.name}>
-        {user.name}
-        {!isDraw && <button className="remove-button" onClick={() => onRemoveUser(user.userId)}>remove</button>}
+        {!isDraw && <button className="remove-button" onClick={() => onRemoveUser(user.userId)}><FontAwesomeIcon icon={faUserTimes} size="1x"/></button>}
+        <span className="break-word">{user.name}</span>
         {user.draw}
         </div>
       ))}
