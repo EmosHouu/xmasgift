@@ -8,8 +8,8 @@
   "title": "Title",
   "continue": "Continue",
   "how_it_works": "How it works?",
-  "rule1": "You are creating members list and send address for everyone to sign in.",
-  "rule2": "After draw each member has to buy a gift to pick person.",
+  "rule1": "Create a members list and invite everyone to game.",
+  "rule2": "Each member has to buy a gift to pick person.",
   "rule3": "Rest rules are yours, how many money you want to spend and so on...",
 
   "b_bookmark": "Bookmark this page to have access to board.",
@@ -22,10 +22,10 @@
 
   "m_bookmark": "Bookmark this page to have access.",
   "m_santa_for": "You are santa for",
-  "m_waiting_for": "Wait for rest kind people...",
+  "m_waiting_for": "Waiting for rest kind people...",
 
   "nm_your_name": "Your name.",
-  "nm_dear_santa": "Dear Santa, I want to get...",
+  "nm_dear_santa": "Dear Santa, I want to...",
   "nm_send_letter": "Send letter",
 
   "c_you_missed": "You missed. Already draw.",
