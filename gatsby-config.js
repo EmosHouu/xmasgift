@@ -40,7 +40,7 @@ module.exports = {
       options: {
         header: true,
         anonymize: true,
-        trackingId: "G-PVDMXN4TEV",
+        trackingId: "G-72XJ5S2RF2",
       },
     },
     `gatsby-plugin-react-helmet`,
