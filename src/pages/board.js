@@ -6,7 +6,6 @@ import Loading from  "../components/Loading"
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useIntl } from "gatsby-plugin-intl"
-import browserLang from 'browser-lang';
 import {
   faUserTimes,
 } from '@fortawesome/free-solid-svg-icons'
@@ -89,7 +88,7 @@ const BoardPage = ({ location }) => {
         { userList.length === 0 && <div>{intl.formatMessage({ id: "b_none" })}</div>}
       {userList.map((user, index) => (
         <div key={user.userId + user.name}>
-        {!isDraw && <button className="remove-button" onClick={() => onRemoveUser(user.userId)}><FontAwesomeIcon icon={faUserTimes} size="1x"/></button>}
+        {!isDraw && <button aria-label="remove-button" className="remove-button" onClick={() => onRemoveUser(user.userId)}><FontAwesomeIcon icon={faUserTimes} size="1x"/></button>}
         <span className="break-word">{user.name}</span>
         {user.draw}
         </div>

@@ -9,7 +9,7 @@
   "continue": "Continue",
   "how_it_works": "How it works?",
   "rule1": "Create a members list and invite everyone to game.",
-  "rule2": "Each member has to buy a gift to pick person.",
+  "rule2": "Each member has to buy a gift for pick person.",
   "rule3": "Rest rules are yours, how many money you want to spend and so on...",
 
   "b_bookmark": "Bookmark this page to have access to board.",
@@ -30,6 +30,6 @@
 
   "c_you_missed": "You missed. Already draw.",
   "c_wrong_address": "Wrong address.",
-  "c_privacy_text": "Every data you enter would be used only for this game and will be deleted after 3 months. Use it only for have fun and DON'T provide here any sensitive data.",
+  "c_privacy_text": "The data you enter is used only for this site and will be deleted after 3 months. Use it only for have fun and DON'T provide here any sensitive data.",
   "c_privacy": "Privacy Policy"
 }
