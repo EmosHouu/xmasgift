@@ -113,20 +113,38 @@
         }
 
         .snowflake {
-            position: absolute;
-            top: -10px;
-            background: white;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            opacity: 0.8;
+            position: fixed;
+            top: -10%;
             pointer-events: none;
+            color: #FFFFFF;
+            font-size: 1em;
+            opacity: 0.8;
+            user-select: none;
+            z-index: 1000;
             animation: fall linear infinite;
         }
 
         @keyframes fall {
-            to {
-                transform: translateY(calc(100vh + 10px));
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .question {
+                font-size: 1.2em;
+            }
+
+            .options button {
+                width: 80%;
             }
         }
     </style>
@@ -143,6 +161,7 @@
         <p>開玩笑的啦~是在座的各位!恭喜你答對了所有問題！去星巴克換禮物</p>
         <img id="qr-code" src="path/to/qr-code.png" alt="QR Code">
     </div>
+
     <script>
         const questions = [
             {
@@ -170,6 +189,10 @@
         let currentQuestionIndex = 0;
         let correctAnswers = 0;
         let selectedOption = null;
+
+        // 儲存當前存在的雪花  
+        let snowflakes = [];
+        const maxSnowflakes = 30; // 設定最大雪花數量  
 
         function showQuestion() {
             const questionContainer = document.getElementById('question-container');
@@ -227,22 +250,31 @@
             }
         }
 
+        function createSnowflakes() {
+            // 檢查當前雪花數量  
+            if (snowflakes.length >= maxSnowflakes) return; // 超過上限就返回  
+            const snowflake = document.createElement('div');
+            snowflake.className = 'snowflake';
+            snowflake.innerHTML = '❄';
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.animationDuration = Math.random() * 3 + 2 + 's'; // 隨機掉落速度  
+            snowflake.style.fontSize = Math.random() * 15 + 10 + 'px'; // 隨機大小  
+            document.body.appendChild(snowflake);
+
+            // 將新雪花添加到數組中  
+            snowflakes.push(snowflake);
+
+            snowflake.addEventListener("animationend", () => {
+                snowflake.remove();
+                snowflakes = snowflakes.filter(s => s !== snowflake); // 從數組中移除已經掉落的雪花  
+            });
+        }
+
+        setInterval(createSnowflakes, 500); // 每1000毫秒產生一個雪花  
+
         document.addEventListener('DOMContentLoaded', () => {
             showQuestion();
-            createSnowflakes();
-        });
-
-        function createSnowflakes() {
-            const snowflakeCount = 100;
-            for (let i = 0; i < snowflakeCount; i++) {
-                const snowflake = document.createElement('div');
-                snowflake.className = 'snowflake';
-                snowflake.style.left = `${Math.random() * 100}vw`;
-                snowflake.style.animationDuration = `${Math.random() * 3 + 2}s`;
-                snowflake.style.opacity = Math.random();
-                document.body.appendChild(snowflake);
-            }
-        }
+        });  
     </script>
 </body>
 
