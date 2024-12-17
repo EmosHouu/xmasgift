@@ -28,7 +28,10 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
             z-index: 1;
-            max-width: 90%;
+            max-width: 330px;
+            /* 或你的希望的固定值 */
+            width: 100%;
+            /* 這樣確保容器不會隨著內容變寬 */
             max-height: 90%;
             overflow: hidden;
         }
@@ -258,7 +261,7 @@
             snowflake.innerHTML = '❄';
             snowflake.style.left = Math.random() * 100 + 'vw';
             snowflake.style.animationDuration = Math.random() * 3 + 2 + 's'; // 隨機掉落速度  
-            snowflake.style.fontSize = Math.random() * 15 + 10 + 'px'; // 隨機大小  
+            snowflake.style.fontSize = Math.random() * 20 + 15 + 'px'; // 隨機大小  
             document.body.appendChild(snowflake);
 
             // 將新雪花添加到數組中  
