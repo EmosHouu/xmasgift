@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>問答遊戲</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('./XmasBack.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            overflow: hidden;
+        }
+
+        .christmas-theme {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            z-index: 1;
+            max-width: 90%;
+            max-height: 90%;
+            overflow: hidden;
+        }
+
+        h1 {
+            color: #d32f2f;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .question {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .options button {
+            background-color: #d32f2f;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            width: 200px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .options button:hover {
+            background-color: #b71c1c;
+        }
+
+        .options button.selected {
+            background-color: #ffeb3b;
+            color: #d32f2f;
+            box-shadow: 0 0 10px 2px rgba(255, 235, 59, 0.8);
+            cursor: default;
+        }
+
+        #next-button {
+            background-color: #388e3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #next-button:hover {
+            background-color: #2e7d32;
+        }
+
+        .result {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .result p {
+            font-size: 1.5em;
+            color: #388e3c;
+        }
+
+        .result img {
+            margin-top: 20px;
+            width: 150px;
+            height: 150px;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            background: white;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            opacity: 0.8;
+            pointer-events: none;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(calc(100vh + 10px));
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="quiz-container" class="christmas-theme">
+        <h1>聖誕問答遊戲</h1>
+        <div id="question-container" class="question"></div>
+        <div id="options-container" class="options"></div>
+        <button id="next-button" onclick="nextQuestion()">下一題</button>
+    </div>
+    <div id="result-container" class="result" style="display: none;">
+        <p>恭喜你！你答對了所有問題！</p>
+        <img id="qr-code" src="path/to/qr-code.png" alt="QR Code">
+    </div>
+    <script>
+        const questions = [
+            {
+                question: "問題 1: 暄的生日是幾月幾號？",
+                options: ["1/23", "2/30", "6/9", "6/15"],
+                answer: "6/15"
+            },
+            {
+                question: "問題 2: 暄小學三年級收到的聖誕禮物是什麼？",
+                options: ["電子錶", "腳踏車", "遙控汽車", "棒球手套"],
+                answer: "電子錶"
+            },
+            {
+                question: "問題 3: 暄去年聖誕節跟女友做了什麼？",
+                options: ["聖誕老人故鄉芬蘭旁邊的挪威的森林探險", "吃火鍋", "因為和職訓局的同學聊天聊太久，晚餐約會遲到，大吵一頓", "以上皆是"],
+                answer: "吃火鍋"
+            },
+            {
+                question: "問題 4: 暄最喜歡的運動是什麼？",
+                options: ["籃球", "足球", "游泳", "跑步"],
+                answer: "籃球"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let correctAnswers = 0;
+        let selectedOption = null;
+
+        function showQuestion() {
+            const questionContainer = document.getElementById('question-container');
+            const optionsContainer = document.getElementById('options-container');
+            const nextButton = document.getElementById('next-button');
+            const question = questions[currentQuestionIndex];
+
+            questionContainer.innerHTML = question.question;
+            optionsContainer.innerHTML = '';
+            nextButton.style.display = 'block';
+            selectedOption = null;
+
+            question.options.forEach(option => {
+                const button = document.createElement('button');
+                button.innerText = option;
+                button.onclick = () => selectOption(button, option);
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function selectOption(button, option) {
+            if (selectedOption) {
+                selectedOption.classList.remove('selected');
+            }
+            button.classList.add('selected');
+            selectedOption = button;
+        }
+
+        function nextQuestion() {
+            if (!selectedOption) {
+                alert('請選擇一個答案');
+                return;
+            }
+            const question = questions[currentQuestionIndex];
+            if (selectedOption.innerText === question.answer) {
+                correctAnswers++;
+            }
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                showQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            const quizContainer = document.getElementById('quiz-container');
+            const resultContainer = document.getElementById('result-container');
+            quizContainer.style.display = 'none';
+            if (correctAnswers === questions.length) {
+                resultContainer.style.display = 'block';
+            } else {
+                resultContainer.innerHTML = '<p>很遺憾，你沒有答對所有問題。</p>';
+                resultContainer.style.display = 'block';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            showQuestion();
+            createSnowflakes();
+        });
+
+        function createSnowflakes() {
+            const snowflakeCount = 100;
+            for (let i = 0; i < snowflakeCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.style.left = `${Math.random() * 100}vw`;
+                snowflake.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                snowflake.style.opacity = Math.random();
+                document.body.appendChild(snowflake);
+            }
+        }
+    </script>
+</body>
+
+</html>
