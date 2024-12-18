@@ -7,7 +7,7 @@
     <title>問答遊戲</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: Microsoft JhengHei, "Noto Serif TC", serif;
             background-color: #f2f2f2;
             margin: 0;
             padding: 0;
@@ -29,9 +29,7 @@
             text-align: center;
             z-index: 1;
             max-width: 330px;
-            /* 或你的希望的固定值 */
             width: 100%;
-            /* 這樣確保容器不會隨著內容變寬 */
             max-height: 90%;
             overflow: hidden;
         }
@@ -115,6 +113,22 @@
             height: 150px;
         }
 
+        .retry-button {
+            background-color: #d32f2f;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        .retry-button:hover {
+            background-color: #b71c1c;
+        }
+
         .snowflake {
             position: fixed;
             top: -10%;
@@ -161,8 +175,12 @@
         <button id="next-button" onclick="nextQuestion()">下一題</button>
     </div>
     <div id="result-container" class="result" style="display: none;">
-        <p>開玩笑的啦~是在座的各位!恭喜你答對了所有問題！去星巴克換禮物</p>
+        <p>開玩笑的啦~是在座的各位!<br>恭喜你答對了所有問題！<br>去星巴克換禮物</p>
         <img id="qr-code" src="path/to/qr-code.png" alt="QR Code">
+    </div>
+    <div id="retry-container" class="result" style="display: none;">
+        <p>很遺憾，你沒有答對所有問題。</p>
+        <button class="retry-button" onclick="retryQuiz()">重新挑戰</button>
     </div>
 
     <script>
@@ -192,6 +210,7 @@
         let currentQuestionIndex = 0;
         let correctAnswers = 0;
         let selectedOption = null;
+        let selectedAnswers = [];
 
         // 儲存當前存在的雪花  
         let snowflakes = [];
@@ -205,7 +224,6 @@
 
             questionContainer.innerHTML = question.question;
             optionsContainer.innerHTML = '';
-            nextButton.style.display = 'block';
             selectedOption = null;
 
             question.options.forEach(option => {
@@ -214,6 +232,13 @@
                 button.onclick = () => selectOption(button, option);
                 optionsContainer.appendChild(button);
             });
+
+            // 檢查是否為最後一題，修改按鈕文字  
+            if (currentQuestionIndex === questions.length - 1) {
+                nextButton.innerHTML = '結束作答';
+            } else {
+                nextButton.innerHTML = '下一題';
+            }
         }
 
         function selectOption(button, option) {
@@ -222,6 +247,7 @@
             }
             button.classList.add('selected');
             selectedOption = button;
+            selectedAnswers[currentQuestionIndex] = option; // 儲存選擇的答案
         }
 
         function nextQuestion() {
@@ -244,13 +270,40 @@
         function showResult() {
             const quizContainer = document.getElementById('quiz-container');
             const resultContainer = document.getElementById('result-container');
-            quizContainer.style.display = 'none';
+            const retryContainer = document.getElementById('retry-container');
+
+            quizContainer.style.display = 'none'; // 隱藏題目容器  
+            resultContainer.style.display = 'none'; // 隱藏正確結果容器  
+            retryContainer.style.display = 'none';   // 隱藏重試容器  
+
+            // 判斷是否全答對  
             if (correctAnswers === questions.length) {
-                resultContainer.style.display = 'block';
+                resultContainer.style.display = 'block'; // 顯示正確結果容器  
             } else {
-                resultContainer.innerHTML = '<p>很遺憾，你沒有答對所有問題。</p>';
-                resultContainer.style.display = 'block';
+                const failedQuestions = questions.map((question, index) => {
+                    // 檢查目前選取的答案與正確答案  
+                    return selectedAnswers[index] !== question.answer ? index + 1 : null;
+                }).filter(index => index !== null);
+
+                // 顯示回答錯誤的題號  
+                const errorMessage = `很遺憾，你沒有答對所有問題。\n你答錯的問題是第：${failedQuestions.join(', ')}題。`;
+                retryContainer.querySelector('p').innerText = errorMessage;
+
+                retryContainer.style.display = 'block'; // 顯示重試容器  
             }
+        }
+
+        function retryQuiz() {
+            currentQuestionIndex = 0;
+            correctAnswers = 0;
+            selectedAnswers = []; // 重置選擇的答案  
+
+            // 顯示測驗容器，隱藏結果容器  
+            document.getElementById('quiz-container').style.display = 'block';
+            document.getElementById('result-container').style.display = 'none';
+            document.getElementById('retry-container').style.display = 'none';
+
+            showQuestion(); // 顯示第一題  
         }
 
         function createSnowflakes() {
@@ -273,7 +326,7 @@
             });
         }
 
-        setInterval(createSnowflakes, 500); // 每1000毫秒產生一個雪花  
+        setInterval(createSnowflakes, 500); // 每500毫秒產生一個雪花  
 
         document.addEventListener('DOMContentLoaded', () => {
             showQuestion();
