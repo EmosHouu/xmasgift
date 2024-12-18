@@ -151,28 +151,6 @@
             }
         }
 
-        @keyframes slideIn {
-            0% {
-                transform: translate(-50%, -120%);
-                opacity: 0;
-            }
-
-            100% {
-                transform: translate(-50%, -30%);
-                opacity: 1;
-            }
-        }
-
-        #wreath {
-            display: none;
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translate(-50%, -100%);
-            z-index: 1001;
-            animation: slideIn 0.5s forwards;
-        }
-
         @media screen and (max-width: 600px) {
             h1 {
                 font-size: 1.5em;
@@ -203,9 +181,6 @@
     <div id="retry-container" class="result" style="display: none;">
         <p>很遺憾，你沒有答對所有問題。</p>
         <button class="retry-button" onclick="retryQuiz()">重新挑戰</button>
-    </div>
-    <div id="wreath">
-        <img src="./123.png" alt="聖誕花圈" style="width: 450px;">
     </div>
 
     <script>
@@ -272,7 +247,7 @@
             }
             button.classList.add('selected');
             selectedOption = button;
-            selectedAnswers[currentQuestionIndex] = option; // 儲存選擇的答案  
+            selectedAnswers[currentQuestionIndex] = option; // 儲存選擇的答案
         }
 
         function nextQuestion() {
@@ -280,27 +255,16 @@
                 alert('請選擇一個答案');
                 return;
             }
-
             const question = questions[currentQuestionIndex];
             if (selectedOption.innerText === question.answer) {
                 correctAnswers++;
             }
-
-            // 顯示聖誕花圈動畫  
-            const wreath = document.getElementById('wreath');
-            wreath.style.display = 'block'; // 顯示聖誕花圈  
-            wreath.style.animation = 'slideIn 0.5s forwards'; // 使用新的下滑動畫  
-
-            // 隱藏問題一定延遲後隱藏問題並載入下一題  
-            setTimeout(() => {
-                currentQuestionIndex++;
-                if (currentQuestionIndex < questions.length) {
-                    showQuestion();
-                } else {
-                    showResult();
-                }
-                wreath.style.display = 'none'; // 隱藏聖誕花圈  
-            }, 1000); // 停留 1 秒我們的動畫  
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                showQuestion();
+            } else {
+                showResult();
+            }
         }
 
         function showResult() {
